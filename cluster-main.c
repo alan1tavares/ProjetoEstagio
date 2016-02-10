@@ -4,8 +4,18 @@
    usando a biblioteca OpenGL
 */
 
+//--------------------
+// Variaveis Globais
+//-------------------
+
+GLfloat fAspecto;
+
+// Fim das variaveis globais
+
 void desenha(void);
 void desenhar_eixos(void);
+void altera_tamnaho_janela(GLsizei w, GLsizei h);
+void visualizacao_perspectiva(void);
 void inicializa();
 //----------------------------
 // Função principal do sistema
@@ -16,7 +26,7 @@ int main(int argc, char *argv[])
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 	//glutInitWindowPosition(x,y);
-	glutInitWindowSize(300,300); //-> tem q alterar isso aq
+	glutInitWindowSize(450,450); //-> tem q alterar isso aq
 	glutCreateWindow("SCluster 3D");
 	//-----------------------------//
 
@@ -25,7 +35,7 @@ int main(int argc, char *argv[])
 	// Registra a funcao de redesenhamento da janela
 	glutDisplayFunc(desenha);
 	// Registra a funcao de redisionamento da janela 
-	//glutReshapeFunc(altera_tamnaho_janela);
+	glutReshapeFunc(altera_tamnaho_janela);
 /*
 	glutSpecialFunc(teclas_especiais);
 	glutMouseFunc(gerencia_mouse);
@@ -40,6 +50,9 @@ int main(int argc, char *argv[])
 	return 0;
 } // Fim do main
 
+
+
+
 //------------------
 //Funcoes CallBack
 //-----------------
@@ -49,20 +62,54 @@ void desenha(void)
 
 	// Limpa a janela de visualizacao
 	glClear(GL_COLOR_BUFFER_BIT);
-	
-	// Definir a janela
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluOrtho2D(-5,5,-5,5);
-	
+
 	// Desenha os eixos xyz
 	desenhar_eixos();
+
+	// Desenha uma esfera - solida
+	glutWireSphere(1, 30, 30);
 
     // Executa os camando OpenGl
 	glFlush();
 
 } // fim desenha
+
+void altera_tamnaho_janela(GLsizei w, GLsizei h)
+{
+
+	glViewport(0, 0, w, h);
+	fAspecto = (GLfloat)w/(GLfloat)h;
+	visualizacao_perspectiva();
+
+
+}
+
 // fim das fucoes callback;
+
+
+
+
+// Especificar os parametros de visualizacao
+void visualizacao_perspectiva(void)
+{
+	// Especificar a matriz a ser utilizada
+	glMatrixMode(GL_PROJECTION);
+	// Inicializa o sistema de coordenadas
+	glLoadIdentity();
+
+	// Especifica a projecao de perspectiva
+	gluPerspective(60, fAspecto, 0.5, 500);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	// Especifica a posicao do observador e do alvo
+	gluLookAt(0, 0, 5, 0, 0, 0, 0, 1, 0);
+} // fim da visualizacao de perspectiva
+
+
+
+
 
 //------------------
 // Funcao inicializa
@@ -75,6 +122,9 @@ void inicializa(void)
 
 } // fim inicializa
 
+
+
+
 //--------------------
 // Funcoes de desenho
 //--------------------
@@ -82,10 +132,8 @@ void inicializa(void)
 void desenhar_eixos(void)
 {
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	//eixo x
 	glBegin(GL_LINES);
+
 	   // eixo x
 	   glColor3f(0.0f, 0.39f, 0.0f);
 	   glVertex3f(  0.0f, 0.0f, 0.0f);
@@ -99,13 +147,6 @@ void desenhar_eixos(void)
 	   glVertex3f(0.0f,0.0f, 0.0f);
 	   glVertex3f(0.0f,0.0f, 720.0f);
 
-	   // Corte
-	   glColor3f(0.5f, 0.5f, 0.0f);
-	   glVertex3f(1.0f, -100.0f, 0.0f);
-	   glVertex3f(1.0f,  100.0f, 0.0f);
-
 	glEnd();
 
-	glutWireSphere(1, 30, 30);
-
-}
+} // Fim das funcoes de desenho
