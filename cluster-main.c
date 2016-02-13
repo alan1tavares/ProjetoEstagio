@@ -11,18 +11,30 @@
 // Variaveis Globais
 //-------------------
 /**
-	fAspecto -> razao entre a largura e altura
-				da tela
+	fAspecto ->	razao entre a largura e altura
+				da tela.
 	fAngulo  -> usado para dar zoom in e zoom out
-			   quanto maior o angulo maoior o zoom
-*/
+			   	quanto maior o angulo maoior o zoom.
 
+	->Variaveis utlizadas na movimentacao da camera<-
+	fObsX -> define a abiscissa da camera (observador).
+	fObsY -> define a ordenada da camera(observador).
+	fObsZ -> define a cota da camera(observador).
+
+	->Variaveis utilizadas na mdanca de alvo<-
+	fAlvoX -> define a abiscissa do alvo(pra onde esta apontando).
+	fAlvoY -> define a ordenada do alvo(pra onde esta apontando).
+	fAlvoZ -> define a cota do alvo(pra onde esta apontando).
+*/
+//				Variaveis
+//------------------------------------------//
 GLfloat fAspecto, fAngulo;
-int tecla_z_pressionada;
+GLfloat fObsX, fObsY, fObsZ;
+GLfloat fAlvoX, fAlvoY, fAlvoZ;
 // Fim das variaveis globais
 
 
-//-----------------------------------------------------
+//-----------------------------------------------------//
 void desenhar_eixos(void);
 void desenhar_esfera(float x, float y, float z);
 void desenha(void);
@@ -34,7 +46,7 @@ void teclado(unsigned char tecla, int x, int y);
 void teclas_especiais(int tecla, int x, int y);
 
 void inicializa(void);
-//----------------------------------------------------
+//----------------------------------------------------//
 
 
 
@@ -80,7 +92,7 @@ int main(int argc, char *argv[])
 //Funcoes CallBack
 //-----------------
 
-// Funcao usada para desnhar na tela
+//			Desenha
 //----------------------------------//
 void desenha(void)
 {
@@ -103,7 +115,7 @@ void desenha(void)
 //-----------------------------------//
 
 
-// Trta o evento de quando a janela é maximizada
+// 					Resize
 //-----------------------------------------------//
 void altera_tamnaho_janela(GLsizei w, GLsizei h)
 {
@@ -116,49 +128,60 @@ void altera_tamnaho_janela(GLsizei w, GLsizei h)
 //-------------------------------------------------//
 
 
-// Trata dos eventos do mouse
+//					    Mouse
 //-------------------------------------------------//
 void gerencia_mouse(int botao, int estado, int x, int y)
 {	
 
-	if (estado == GLUT_DOWN){
-		printf("passou pr aq \n");
-	}
 
-	visualizacao_perspectiva();
-	glutPostRedisplay();
 
 } // Fim do gerencia mouse
 //------------------------------------------------//
 
 
-// Trata os eventos de pressionamento de teclas do teclado
+//				    Teclas Normais
 //--------------------------------------------------------//
 void teclado(unsigned char tecla, int x, int y)
 {
 
-	if(tecla == 'z') {	
-		printf("%c\n",tecla);
-	}
-	printf("%c\n",tecla);
 
 } // Fim - teclado
 //-------------------------------------------------------//
 
 
-// Trata os eventos de pressionamento de teclas especiais do teclado
+//					Teclas Especiais
 //-------------------------------------------------------------------//
 void teclas_especiais(int tecla, int x, int y)
 {
 
-	// Zoom //
-	if(tecla == GLUT_KEY_PAGE_UP && fAngulo > 1) { // Amplia
-		fAngulo = fAngulo - 1;
-	} else if(tecla == GLUT_KEY_PAGE_DOWN && fAngulo < 179) { // Diminui
-		fAngulo = fAngulo + 1;
+	switch(tecla)
+	{
+		// Zoom //
+		case GLUT_KEY_PAGE_UP: // Amplia a cena
+			if(fAngulo > 1) fAngulo = fAngulo - 1;
+			break;
+		case GLUT_KEY_PAGE_DOWN: // Diminui a tela
+			if(fAngulo < 179) fAngulo = fAngulo + 1;
+			break;
+		// Fim do zoom //
+
+		// Movimentacao da camera //
+		case GLUT_KEY_UP:
+			++fObsY; ++fAlvoY;
+			break;
+		case GLUT_KEY_DOWN:
+			--fObsY; --fAlvoY;
+			break;
+		case GLUT_KEY_LEFT:
+			++fObsX; ++fAlvoX;
+			break;
+		case GLUT_KEY_RIGHT:
+			--fObsX; --fAlvoX;
+		// Fim da movimentacao camera //
 	}
+
+
 	printf("fAngulo -> %f \n", fAngulo);
-	// Fim do zoom
 
 	// Ataualiza a camera
 	atualizar_camera();
@@ -173,7 +196,7 @@ void teclas_especiais(int tecla, int x, int y)
 // Outras funcoes
 // ---------------
 
-// Funcao que ajeita a camera de perspectiva 
+//					Cameras 
 //--------------------------------------------//
 void visualizacao_perspectiva(void)
 {
@@ -190,13 +213,16 @@ void visualizacao_perspectiva(void)
 	glLoadIdentity();
 
 	// Especifica a posicao do observador e do alvo
-	gluLookAt(0, 0, 10, 0, 0, 0, 0, 1, 0);
+	// As 3 do comeco -> posicao da camera
+	// As 3 do meio   -> direcao para onde esta olhando
+	// As 3 utltimas estabelece o vetor up
+	gluLookAt(fObsX, fObsY, fObsZ, fAlvoX, fAlvoY, fAlvoZ, 0, 1, 0);
 
 } // fim da visualizacao de perspectiva
 //-----------------------------------------------//
 
 
-// Funcao que atualiza a camera
+// 			Atualiza a camera
 //---------------------------------------//
 void atualizar_camera(void)
 {
@@ -219,6 +245,10 @@ void inicializa(void)
 	// Define a cor de fundo da janela
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	fAngulo = 60.0f;
+	// Define a posicao do observador(camera)
+	fObsX  = 0;  fObsY  = 0; fObsZ  = 10;
+	// Define a localização do alvo
+	fAlvoX = 0;  fAlvoY = 0; fAlvoZ = 0;
 
 } // fim inicializa
 //--------------------//
@@ -229,7 +259,8 @@ void inicializa(void)
 // Funcoes de desenho
 //--------------------
 
-// Funcao para desenhar o eixo x, y e z
+//					Eixo x, y e z
+//------------------------------------------------//
 void desenhar_eixos(void)
 {
 
@@ -253,7 +284,8 @@ void desenhar_eixos(void)
 } 
 
 
-// Funcao para desnhar uma esfera nas coordenadas x, y e z
+// 						Esfera
+//-----------------------------------------------------//
 void desenhar_esfera(float x, float y, float z)
 {
 
