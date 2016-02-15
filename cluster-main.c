@@ -131,7 +131,7 @@ void altera_tamnaho_janela(GLsizei w, GLsizei h)
 //					    Mouse
 //-------------------------------------------------//
 void gerencia_mouse(int botao, int estado, int x, int y)
-{	
+{
 
 
 
@@ -143,7 +143,7 @@ void gerencia_mouse(int botao, int estado, int x, int y)
 //--------------------------------------------------------//
 void teclado(unsigned char tecla, int x, int y)
 {
-
+	if(tecla == 27) exit(0);
 
 } // Fim - teclado
 //-------------------------------------------------------//
