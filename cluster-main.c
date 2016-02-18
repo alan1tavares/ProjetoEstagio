@@ -25,19 +25,12 @@
 	fAlvoX -> define a abiscissa do alvo(pra onde esta apontando).
 	fAlvoY -> define a ordenada do alvo(pra onde esta apontando).
 	fAlvoZ -> define a cota do alvo(pra onde esta apontando).
-
-	->Variaveis utilizada para a rotacao do plano<-
-	fRotacaoX -> angulo usado na rotacao do eixo X.
-	fRotacaoY -> angulo usado na rotacao do eixo Y.
-	fRotacaoZ -> angulo usado na rotacao do eixo Z.
 */
-
 //				Variaveis
 //------------------------------------------//
 GLfloat fAspecto, fAngulo;
 GLfloat fObsX, fObsY, fObsZ;
 GLfloat fAlvoX, fAlvoY, fAlvoZ;
-GLfloat fRotacaoX, fRotacaoY, fRotacaoZ;
 // Fim das variaveis globais
 
 
@@ -46,7 +39,6 @@ void desenhar_eixos(void);
 void desenhar_esfera(float x, float y, float z);
 void desenha(void);
 void visualizacao_perspectiva(void);
-void fazer_rotacoes(void);
 void atualizar_camera(void);
 void altera_tamnaho_janela(GLsizei w, GLsizei h);
 void gerencia_mouse(int botao, int estado, int x, int y);
@@ -152,16 +144,6 @@ void gerencia_mouse(int botao, int estado, int x, int y)
 void teclado(unsigned char tecla, int x, int y)
 {
 	if(tecla == 27) exit(0);
-	if(tecla == 'w') --fRotacaoX;
-	if(tecla == 's') ++fRotacaoX;
-
-	if(tecla == 'a') --fRotacaoY;
-	if(tecla == 'd') ++fRotacaoY;
-
-	if(tecla == 'z') --fObsZ; --fAlvoZ;
-	if(tecla == 'x') ++fObsZ; ++fAlvoZ;
-
-	atualizar_camera();
 
 } // Fim - teclado
 //-------------------------------------------------------//
@@ -191,15 +173,15 @@ void teclas_especiais(int tecla, int x, int y)
 			--fObsY; --fAlvoY;
 			break;
 		case GLUT_KEY_LEFT:
-			--fObsX; --fAlvoX;
+			++fObsX; ++fAlvoX;
 			break;
 		case GLUT_KEY_RIGHT:
-			++fObsX; ++fAlvoX;
+			--fObsX; --fAlvoX;
 		// Fim da movimentacao camera //
 	}
 
 
-	printf("fObsY fObsX -> %f %f \n", fObsY, fObsX);
+	printf("fAngulo -> %f \n", fAngulo);
 
 	// Ataualiza a camera
 	atualizar_camera();
@@ -230,9 +212,6 @@ void visualizacao_perspectiva(void)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	// Faz as rotacoes
-	fazer_rotacoes();
-		
 	// Especifica a posicao do observador e do alvo
 	// As 3 do comeco -> posicao da camera
 	// As 3 do meio   -> direcao para onde esta olhando
@@ -252,17 +231,6 @@ void atualizar_camera(void)
 	glutPostRedisplay();
 
 } // Fim de atualizar camera
-
-//				Rotacoes			
-//---------------------------------//
-void fazer_rotacoes(void)
-{
-
-	glRotatef(fRotacaoX, 1, 0, 0);
-	glRotatef(fRotacaoY, 0, 1, 0);
-	glRotatef(fRotacaoZ, 0, 0, 1);
-
-} // Fim de fazer rotacoes
 // Fim das outras funcoes
 //--------------------------------//
 
@@ -281,8 +249,6 @@ void inicializa(void)
 	fObsX  = 0;  fObsY  = 0; fObsZ  = 10;
 	// Define a localização do alvo
 	fAlvoX = 0;  fAlvoY = 0; fAlvoZ = 0;
-	// Define os angulos de rotacoes
-	fRotacaoX = 0; fRotacaoY = 0; fRotacaoZ = 0;
 
 } // fim inicializa
 //--------------------//
@@ -315,7 +281,7 @@ void desenhar_eixos(void)
 
 	glEnd();
 
-}
+} 
 
 
 // 						Esfera
