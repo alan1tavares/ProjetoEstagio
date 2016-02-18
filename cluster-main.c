@@ -17,14 +17,9 @@
 			   	quanto maior o angulo maoior o zoom.
 
 	->Variaveis utlizadas na movimentacao da camera<-
-	fObsX -> define a abiscissa da camera (observador).
-	fObsY -> define a ordenada da camera(observador).
-	fObsZ -> define a cota da camera(observador).
-
-	->Variaveis utilizadas na mdanca de alvo<-
-	fAlvoX -> define a abiscissa do alvo(pra onde esta apontando).
-	fAlvoY -> define a ordenada do alvo(pra onde esta apontando).
-	fAlvoZ -> define a cota do alvo(pra onde esta apontando).
+	fTranslacaoX -> Movimentação pela a abiscissa.
+	fTranslacaoY -> Movimentacao pela a ordenada.
+	fTranslacaoZ -> Movimentacao pela a cota.
 
 	->Variaveis utilizada para a rotacao do plano<-
 	fRotacaoX -> angulo usado na rotacao do eixo X.
@@ -35,15 +30,14 @@
 //				Variaveis
 //------------------------------------------//
 GLfloat fAspecto, fAngulo;
-GLfloat fObsX, fObsY, fObsZ;
-GLfloat fAlvoX, fAlvoY, fAlvoZ;
 GLfloat fRotacaoX, fRotacaoY, fRotacaoZ;
+GLfloat fTranslacaoX, fTranslacaoY, fTranslacaoZ;
 // Fim das variaveis globais
 
 
 //-----------------------------------------------------//
 void desenhar_eixos(void);
-void desenhar_esfera(float x, float y, float z);
+void desenhar_esfera(float x, float y, float z, float r, float g, float b);
 void desenha(void);
 void visualizacao_perspectiva(void);
 void fazer_rotacoes(void);
@@ -111,10 +105,9 @@ void desenha(void)
 	// Desenha os eixos xyz
 	desenhar_eixos();
 
-	// Desenha esferas de cor preta
-	glColor3f(0.0f, 0.0f, 0.0f);
-	desenhar_esfera(2.0f, 0.0f, 0.0f);
-	desenhar_esfera(0.0f, 3.0f, 0.0f);
+	// Desenha esferas de cor rosa e preta
+	desenhar_esfera(2.0f, 0.0f, 0.0f, 1.0f, 0.08f, 0.58f);
+	desenhar_esfera(0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 
     // Executa os camando OpenGl
 	glFlush();
@@ -151,15 +144,14 @@ void gerencia_mouse(int botao, int estado, int x, int y)
 //--------------------------------------------------------//
 void teclado(unsigned char tecla, int x, int y)
 {
+	// Sair da tela usando esc
 	if(tecla == 27) exit(0);
+	// Rotacao no eixo X
 	if(tecla == 'w') --fRotacaoX;
 	if(tecla == 's') ++fRotacaoX;
-
+	// Rotacao no eixo Y
 	if(tecla == 'a') --fRotacaoY;
 	if(tecla == 'd') ++fRotacaoY;
-
-	if(tecla == 'z') --fObsZ; --fAlvoZ;
-	if(tecla == 'x') ++fObsZ; ++fAlvoZ;
 
 	atualizar_camera();
 
@@ -176,30 +168,34 @@ void teclas_especiais(int tecla, int x, int y)
 	{
 		// Zoom //
 		case GLUT_KEY_PAGE_UP: // Amplia a cena
-			if(fAngulo > 1) fAngulo = fAngulo - 30;
+			if(fAngulo > 1) --fAngulo;
 			break;
 		case GLUT_KEY_PAGE_DOWN: // Diminui a tela
-			if(fAngulo < 179) fAngulo = fAngulo + 30;
+			if(fAngulo < 179) ++fAngulo;
 			break;
 		// Fim do zoom //
 
 		// Movimentacao da camera //
+		// Frente
 		case GLUT_KEY_UP:
-			++fObsZ; ++fAlvoZ;//--fObsY; --fAlvoY;//++fObsY; ++fAlvoY;
+			++fTranslacaoZ;
 			break;
+		// Atras
 		case GLUT_KEY_DOWN:
-			--fObsZ; --fAlvoZ;//++fObsY; ++fAlvoY;//--fObsY; --fAlvoY;
+			--fTranslacaoZ;
 			break;
+		// Esquerda
 		case GLUT_KEY_LEFT:
-			++fObsX; ++fAlvoX;//--fObsX; --fAlvoX;
+			++fTranslacaoX;
 			break;
+		// Direita
 		case GLUT_KEY_RIGHT:
-			--fObsX; --fAlvoX;//++fObsX; ++fAlvoX;
+			--fTranslacaoX;
 		// Fim da movimentacao camera //
 	}
 
 
-	printf("fAlvoY fAlvoX -> %f %f \n", fAlvoY, fAlvoX);
+	printf("fTranslacaoX, fTranslacaoZ -> %f %f \n", fTranslacaoX, fTranslacaoZ);
 
 	// Ataualiza a camera
 	atualizar_camera();
@@ -235,7 +231,10 @@ void visualizacao_perspectiva(void)
 	// As 3 do meio   -> direcao para onde esta olhando
 	// As 3 utltimas estabelece o vetor up
 	gluLookAt(0,0,10, 0,0,0 , 0, 1, 0);
-	glTranslatef(fObsX, fObsY, fAlvoZ);
+
+	// Trasnlacao
+	glTranslatef(fTranslacaoX, fTranslacaoY, fTranslacaoZ);
+	// Rotacao
 	fazer_rotacoes();
 
 } // fim da visualizacao de perspectiva
@@ -251,6 +250,7 @@ void atualizar_camera(void)
 	glutPostRedisplay();
 
 } // Fim de atualizar camera
+
 
 //				Rotacoes			
 //---------------------------------//
@@ -276,12 +276,11 @@ void inicializa(void)
 	// Define a cor de fundo da janela
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	fAngulo = 60.0f;
-	// Define a posicao do observador(camera)
-	fObsX  = 0;  fObsY  = 0; fObsZ  = 10;
-	// Define a localização do alvo
-	fAlvoX = 0;  fAlvoY = 0; fAlvoZ = 0;
+
 	// Define os angulos de rotacoes
 	fRotacaoX = 0; fRotacaoY = 0; fRotacaoZ = 0;
+	// Define as variavei usadas nas translacoes	
+	fTranslacaoX = 0; fTranslacaoY = 0; fTranslacaoZ = 0;
 
 } // fim inicializa
 //--------------------//
@@ -300,15 +299,15 @@ void desenhar_eixos(void)
 	glBegin(GL_LINES);
 
 	   // eixo x
-	   glColor3f(1.0f, 0.0f, 0.0f);
+	   glColor3f(1.0f, 0.0f, 0.0f); // vermelho
 	   glVertex3f(  0.0f, 0.0f, 0.0f);
 	   glVertex3f(720.0f, 0.0f, 0.0f);
 	   // eixo y
-	   glColor3f(0.0f, 1.0f, 0.0f);
+	   glColor3f(0.0f, 1.0f, 0.0f); // azul
 	   glVertex3f(0.0f,   0.0f, 0.0f);
 	   glVertex3f(0.0f, 720.0f, 0.0f);
 	   // eixo z
-	   glColor3f(0.0f, 0.0f, 1.0f);
+	   glColor3f(0.0f, 0.0f, 1.0f); // amarelo
 	   glVertex3f(0.0f,0.0f, 0.0f);
 	   glVertex3f(0.0f,0.0f, 720.0f);
 
@@ -319,7 +318,7 @@ void desenhar_eixos(void)
 
 // 						Esfera
 //-----------------------------------------------------//
-void desenhar_esfera(float x, float y, float z)
+void desenhar_esfera(float x, float y, float z, float r, float g, float b)
 {
 
 	// Guarda a transformacao de matrix corrente na pilha
@@ -328,8 +327,11 @@ void desenhar_esfera(float x, float y, float z)
 	// Aplica uma translacao sobre a esfera
 	glTranslatef(x, y, z);
 
+	// Define a cor	
+	glColor3f(r,g,b);
+
 	// Desenha uma esfera - solida
-	glutWireSphere(1, 30, 30);
+	glutSolidSphere(1, 30, 30);
 
 	// Restaura a transformacao de matrix corrente na pilha
 	glPopMatrix();
