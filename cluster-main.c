@@ -176,30 +176,30 @@ void teclas_especiais(int tecla, int x, int y)
 	{
 		// Zoom //
 		case GLUT_KEY_PAGE_UP: // Amplia a cena
-			if(fAngulo > 1) fAngulo = fAngulo - 1;
+			if(fAngulo > 1) fAngulo = fAngulo - 30;
 			break;
 		case GLUT_KEY_PAGE_DOWN: // Diminui a tela
-			if(fAngulo < 179) fAngulo = fAngulo + 1;
+			if(fAngulo < 179) fAngulo = fAngulo + 30;
 			break;
 		// Fim do zoom //
 
 		// Movimentacao da camera //
 		case GLUT_KEY_UP:
-			++fObsY; ++fAlvoY;
+			++fObsZ; ++fAlvoZ;//--fObsY; --fAlvoY;//++fObsY; ++fAlvoY;
 			break;
 		case GLUT_KEY_DOWN:
-			--fObsY; --fAlvoY;
+			--fObsZ; --fAlvoZ;//++fObsY; ++fAlvoY;//--fObsY; --fAlvoY;
 			break;
 		case GLUT_KEY_LEFT:
-			--fObsX; --fAlvoX;
+			++fObsX; ++fAlvoX;//--fObsX; --fAlvoX;
 			break;
 		case GLUT_KEY_RIGHT:
-			++fObsX; ++fAlvoX;
+			--fObsX; --fAlvoX;//++fObsX; ++fAlvoX;
 		// Fim da movimentacao camera //
 	}
 
 
-	printf("fObsY fObsX -> %f %f \n", fObsY, fObsX);
+	printf("fAlvoY fAlvoX -> %f %f \n", fAlvoY, fAlvoX);
 
 	// Ataualiza a camera
 	atualizar_camera();
@@ -229,15 +229,14 @@ void visualizacao_perspectiva(void)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
-	// Faz as rotacoes
-	fazer_rotacoes();
-		
+	
 	// Especifica a posicao do observador e do alvo
 	// As 3 do comeco -> posicao da camera
 	// As 3 do meio   -> direcao para onde esta olhando
 	// As 3 utltimas estabelece o vetor up
-	gluLookAt(fObsX, fObsY, fObsZ, fAlvoX, fAlvoY, fAlvoZ, 0, 1, 0);
+	gluLookAt(0,0,10, 0,0,0 , 0, 1, 0);
+	glTranslatef(fObsX, fObsY, fAlvoZ);
+	fazer_rotacoes();
 
 } // fim da visualizacao de perspectiva
 //-----------------------------------------------//
