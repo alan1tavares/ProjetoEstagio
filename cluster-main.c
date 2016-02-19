@@ -1,6 +1,6 @@
-#include <windows.h>
 #include <GL/glut.h>
 #include <stdio.h>
+#include <math.h>
 
 /**
    Aplicação de para plotar ponstos de um arquivo
@@ -45,6 +45,7 @@ void altera_tamanho_janela(GLsizei w, GLsizei h);
 void gerencia_mouse(int botao, int estado, int x, int y);
 void teclado(unsigned char tecla, int x, int y);
 void teclas_especiais(int tecla, int x, int y);
+void drawCylinder(float x1, float y1, float z1, float x2, float y2, float z3, float r, float g, float b);
 
 void inicializa(void);
 //----------------------------------------------------//
@@ -105,17 +106,16 @@ void desenha(void)
     desenhar_eixos();
 
     // Desenha esferas de cor preta
-    glColor3f(0.0f, 0.0f, 0.0f);
     desenhar_esfera(2.0f, 0.0f, 0.0f, 1.0f, 0.08f, 0.58f);
     desenhar_esfera(0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 
-    //glLineWidth(2.5);
-    glColor3f(0.0, 0.0, 0.0);
-    glBegin(GL_LINES);
+    drawCylinder(0.0f, 3.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 0.0f);
+    /*glBegin(GL_LINES);
     glVertex3f(0.5f, 0.5f, 0.5f);
     glVertex3f(2.0f, 0.0f, 0.0f);
     glVertex3f(0.5f, 0.5f, 0.5f);
-    glVertex3f(0.0f, 3.0f, 0.0f);
+    glVertex3f(0.0f, 3.0f, 0.0f);*/
+
     glEnd();
 
     // Executa os camando OpenGl
@@ -354,5 +354,44 @@ void desenhar_esfera(float x, float y, float z, float r, float g, float b)
     // Restaura a transformacao de matrix corrente na pilha
     glPopMatrix();
 
+}
+
+void drawCylinder(float x1, float y1, float z1, float x2, float y2, float z2, float r, float g, float b){
+        float radius = 0.05;        //raio
+        int subdivisions = 10;      //quantidade de fatias do cilindro
+        GLUquadricObj *quadric = gluNewQuadric();
+
+        float vx = x2-x1;
+        float vy = y2-y1;
+        float vz = z2-z1;
+
+        //se por algum motivo z1 == z2 ele contorna esse problema fazendo uma aproximação
+        if(vz == 0)
+            vz = .0001;
+
+        float v = sqrt(vx*vx + vy*vy + vz*vz);
+        float ax = 57.2957795 * acos(vz/v);
+        if (vz < 0.0)
+            ax = -ax;
+        float rx = -vy*vz;
+        float ry = vx*vz;
+
+        glPushMatrix();
+        //desenha o corpo do cilindro
+        glColor3f(r, g, b);
+        glTranslatef(x1 ,y1 ,z1);
+        glRotatef(ax, rx, ry, 0.0);
+        gluQuadricOrientation(quadric, GLU_OUTSIDE);
+        gluCylinder(quadric, radius, radius, v, subdivisions, 1);
+
+        //draw the first cap
+        gluQuadricOrientation(quadric, GLU_INSIDE);
+        gluDisk(quadric, 0.0, radius, subdivisions, 1);
+        glTranslatef(0 ,0 ,v);
+
+        //draw the second cap
+        gluQuadricOrientation(quadric, GLU_OUTSIDE);
+        gluDisk(quadric, 0.0, radius, subdivisions, 1);
+        glPopMatrix();
 }
 // Fim das funcoes de desenho
