@@ -338,29 +338,38 @@ void desenhar_eixos(void)
 {
     glDisable(GL_LIGHTING);
     glBegin(GL_LINES);
+
+    glColor3f(1.0f, 0.0f, 0.0f); // vermelho
+    glVertex3f(-50.0f, 0.0f, 0.0f);
+    glVertex3f(50.0f, 0.0f, 0.0f);
+
+    glColor3f(0.0f, 1.0f, 0.0f); //verde
+    glVertex3f(0.0f, -50.0f, 0.0f);
+    glVertex3f(0.0f, 50.0f, 0.0f);
+
+    glColor3f(0.0f, 0.0f, 1.0f); //azul
+    glVertex3f(0.0f,0.0f, -50.0f);
+    glVertex3f(0.0f,0.0f, 50.0f);
+
     for (int i = -50; i <= 50; i+=1){
+        glColor3f(0.8f, 0.8f, 0.8f);
         //plano xz
-        glColor3f(1.0f, 0.0f, 0.0f);
         glVertex3f((float)i, 0.0f, -50.0f);
         glVertex3f((float)i, 0.0f, 50.0f);
         glVertex3f(-50.0f, 0.0f,(float)i);
         glVertex3f(50.0f, 0.0f,(float)i);
         //plano xy
-        glColor3f(0.0f, 1.0f, 0.0f);
         glVertex3f((float)i, -50.0f, 0.0f);
         glVertex3f((float)i, 50.0f, 0.0f);
         glVertex3f(-50.0f, (float)i, 0.0f);
         glVertex3f(50.0f, (float)i, 0.0f);
         //plano yz
-        glColor3f(0.0f, 0.0f, 1.0f);
         glVertex3f(0.0f, -50.0f, (float)i);
         glVertex3f(0.0f, 50.0f, (float)i);
         glVertex3f(0.0f, (float)i, -50.0f);
         glVertex3f(0.0f, (float)i, 50.0f);
     }
     glEnd();
-
-
 }
 
 
