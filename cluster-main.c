@@ -1,4 +1,4 @@
-#include <GL/freeglut.h>
+#include <GL/glut.h>
 #include <stdio.h>
 #include <math.h>
 
@@ -36,6 +36,22 @@ GLfloat fTranslacaoX, fTranslacaoY, fTranslacaoZ;
 // Fim das variaveis globais
 
 
+
+//              Variaveis usada na iluminacao
+//---------------------------------------------------------//
+const GLfloat light_ambient[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
+const GLfloat light_diffuse[]  = { 1.0f, 1.0f, 1.0f, 1.0f };
+const GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+const GLfloat light_position[] = { 2.0f, 5.0f, 5.0f, 0.0f };
+
+const GLfloat mat_ambient[]    = { 0.7f, 0.7f, 0.7f, 1.0f };
+const GLfloat mat_diffuse[]    = { 0.8f, 0.8f, 0.8f, 1.0f };
+const GLfloat mat_specular[]   = { 1.0f, 1.0f, 1.0f, 1.0f };
+const GLfloat high_shininess[] = { 100.0f };
+
+
+
+//                   Cabecalho
 //-----------------------------------------------------//
 void desenhar_eixos(void);
 void desenhar_esfera(float x, float y, float z, float r, float g, float b);
@@ -53,15 +69,7 @@ void inicializa(void);
 //----------------------------------------------------//
 
 
-const GLfloat light_ambient[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
-const GLfloat light_diffuse[]  = { 1.0f, 1.0f, 1.0f, 1.0f };
-const GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-const GLfloat light_position[] = { 2.0f, 5.0f, 5.0f, 0.0f };
 
-const GLfloat mat_ambient[]    = { 0.7f, 0.7f, 0.7f, 1.0f };
-const GLfloat mat_diffuse[]    = { 0.8f, 0.8f, 0.8f, 1.0f };
-const GLfloat mat_specular[]   = { 1.0f, 1.0f, 1.0f, 1.0f };
-const GLfloat high_shininess[] = { 100.0f };
 //----------------------------
 // Função principal do sistema
 //----------------------------
@@ -91,6 +99,8 @@ int main(int argc, char *argv[])
     //-------------------------------------------------//
 
     inicializa();
+
+
     // Inicia o precessamento e guarda interacoes
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
@@ -142,16 +152,9 @@ void desenha(void)
 
     drawCylinder(0.0f, 3.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 0.0f);
     drawCylinder(2.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, 1.0f, 0.08f, 0.58f);
-    /*glBegin(GL_LINES);
-    glVertex3f(0.5f, 0.5f, 0.5f);
-    glVertex3f(2.0f, 0.0f, 0.0f);
-    glVertex3f(0.5f, 0.5f, 0.5f);
-    glVertex3f(0.0f, 3.0f, 0.0f);*/
 
-    glEnd();
-
-    // Executa os camando OpenGl
-	glFlush();
+	// Faz as trocas do buffer
+	glutSwapBuffers();
 
 } // fim desenha
 //-----------------------------------//
@@ -187,9 +190,11 @@ void teclado(unsigned char tecla, int x, int y)
 {
     // Sair da tela usando esc
     if(tecla == 27) exit(0);
+
     // Rotacao no eixo X
     if(tecla == 'w') --fRotacaoX;
     if(tecla == 's') ++fRotacaoX;
+
     // Rotacao no eixo Y
     if(tecla == 'a') --fRotacaoY;
     if(tecla == 'd') ++fRotacaoY;
@@ -337,38 +342,40 @@ void inicializa(void)
 void desenhar_eixos(void)
 {
     glDisable(GL_LIGHTING);
-    glBegin(GL_LINES);
+    
+	glBegin(GL_LINES);
 
-    glColor3f(1.0f, 0.0f, 0.0f); // vermelho
-    glVertex3f(-50.0f, 0.0f, 0.0f);
-    glVertex3f(50.0f, 0.0f, 0.0f);
+       glColor3f(1.0f, 0.0f, 0.0f); // vermelho
+       glVertex3f(-50.0f, 0.0f, 0.0f);
+       glVertex3f(50.0f, 0.0f, 0.0f);
 
-    glColor3f(0.0f, 1.0f, 0.0f); //verde
-    glVertex3f(0.0f, -50.0f, 0.0f);
-    glVertex3f(0.0f, 50.0f, 0.0f);
+       glColor3f(0.0f, 1.0f, 0.0f); //verde
+       glVertex3f(0.0f, -50.0f, 0.0f);
+       glVertex3f(0.0f, 50.0f, 0.0f);
 
-    glColor3f(0.0f, 0.0f, 1.0f); //azul
-    glVertex3f(0.0f,0.0f, -50.0f);
-    glVertex3f(0.0f,0.0f, 50.0f);
+       glColor3f(0.0f, 0.0f, 1.0f); //azul
+       glVertex3f(0.0f,0.0f, -50.0f);
+       glVertex3f(0.0f,0.0f, 50.0f);
 
-    for (int i = -50; i <= 50; i+=1){
-        glColor3f(0.8f, 0.8f, 0.8f);
-        //plano xz
-        glVertex3f((float)i, 0.0f, -50.0f);
-        glVertex3f((float)i, 0.0f, 50.0f);
-        glVertex3f(-50.0f, 0.0f,(float)i);
-        glVertex3f(50.0f, 0.0f,(float)i);
-        //plano xy
-        glVertex3f((float)i, -50.0f, 0.0f);
-        glVertex3f((float)i, 50.0f, 0.0f);
-        glVertex3f(-50.0f, (float)i, 0.0f);
-        glVertex3f(50.0f, (float)i, 0.0f);
-        //plano yz
-        glVertex3f(0.0f, -50.0f, (float)i);
-        glVertex3f(0.0f, 50.0f, (float)i);
-        glVertex3f(0.0f, (float)i, -50.0f);
-        glVertex3f(0.0f, (float)i, 50.0f);
-    }
+       for (int i = -50; i <= 50; i+=1){
+           glColor3f(0.8f, 0.8f, 0.8f);
+           //plano xz
+           glVertex3f((float)i, 0.0f, -50.0f);
+           glVertex3f((float)i, 0.0f, 50.0f);
+           glVertex3f(-50.0f, 0.0f,(float)i);
+           glVertex3f(50.0f, 0.0f,(float)i);
+           //plano xy
+           glVertex3f((float)i, -50.0f, 0.0f);
+           glVertex3f((float)i, 50.0f, 0.0f);
+           glVertex3f(-50.0f, (float)i, 0.0f);
+           glVertex3f(50.0f, (float)i, 0.0f);
+           //plano yz
+           glVertex3f(0.0f, -50.0f, (float)i);
+           glVertex3f(0.0f, 50.0f, (float)i);
+           glVertex3f(0.0f, (float)i, -50.0f);
+           glVertex3f(0.0f, (float)i, 50.0f);
+       }
+
     glEnd();
 }
 
@@ -395,6 +402,9 @@ void desenhar_esfera(float x, float y, float z, float r, float g, float b)
 
 }
 
+
+//                            Cilindro
+//--------------------------------------------------------------------------//
 void drawCylinder(float x1, float y1, float z1, float x2, float y2, float z2, float r, float g, float b){
         float radius = 0.05;        //raio
         int subdivisions = 10;      //quantidade de fatias do cilindro
