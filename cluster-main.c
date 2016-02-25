@@ -135,16 +135,45 @@ void desenha(void)
     desenhar_eixos();
 
     // Desenha esferas de cor preta
-    desenhar_esfera(2.0f, 0.0f, 0.0f, 1.0f, 0.08f, 0.58f);
+    desenhar_esfera(2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
     desenhar_esfera(0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+    desenhar_esfera(2.0f, 3.5f, -4.0f, 0.0f, 0.0f, 0.0f);
+    desenhar_esfera(-1.0f, -2.0f, -6.2f, 0.0f, 0.0f, 0.0f);
 
     drawCylinder(0.0f, 3.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 0.0f);
-    drawCylinder(2.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, 1.0f, 0.08f, 0.58f);
-    /*glBegin(GL_LINES);
-    glVertex3f(0.5f, 0.5f, 0.5f);
-    glVertex3f(2.0f, 0.0f, 0.0f);
-    glVertex3f(0.5f, 0.5f, 0.5f);
-    glVertex3f(0.0f, 3.0f, 0.0f);*/
+    drawCylinder(2.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 0.0f);
+    drawCylinder(2.0f, 3.5f, -4.0f, 0.5f, 0.5f, 0.5f,0.0f, 0.0f, 0.0f);
+    drawCylinder(-1.0f, -2.0f, -6.2f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 0.0f);
+
+    desenhar_esfera(2.72f, -8.5f, 1.15f, 0.2f, 0.9f, 0.3f);
+    desenhar_esfera(3.08f, -1.1f, 1.53f, 0.2f, 0.9f, 0.3f);
+    desenhar_esfera(4.27f, -3.77f, 1.35f, 0.2f, 0.9f, 0.3f);
+    desenhar_esfera(1.7f, -1.87f, 2.9f, 0.2f, 0.9f, 0.3f);
+
+    drawCylinder(2.72f, -8.5f, 1.15f, 3.099411f, -1.599411f, 8.5882352f, 0.2f, 0.9f, 0.3f);
+    drawCylinder(3.08f, -1.1f, 1.53f, 3.099411f, -1.599411f, 8.5882352f, 0.2f, 0.9f, 0.3f);
+    drawCylinder(4.27f, -3.77f, 1.35f, 3.099411f, -1.599411f, 8.5882352f, 0.2f, 0.9f, 0.3f);
+    drawCylinder(1.7f, -1.87f, 2.9f, 3.099411f, -1.599411f, 8.5882352f, 0.2f, 0.9f, 0.3f);
+
+    desenhar_esfera(3.54f, -2.52f, 3.9f, 0.3f, 0.2f, 0.9f);
+    desenhar_esfera(3.48f, -1.63f, 3.99f, 0.3f, 0.2f, 0.9f);
+    desenhar_esfera(2.32f, -1.2f, 4.06f, 0.3f, 0.2f, 0.9f);
+    desenhar_esfera(1.12f, -2.03f, 4.87f, 0.3f, 0.2f, 0.9f);
+
+    drawCylinder(3.54f, -2.52f, 3.9f, 2.3500000f, -1.0277777f, 3.9266666f, 0.3f, 0.2f, 0.9f);
+    drawCylinder(3.48f, -1.63f, 3.99f, 2.3500000f, -1.0277777f, 3.9266666f, 0.3f, 0.2f, 0.9f);
+    drawCylinder(2.32f, -1.2f, 4.06f, 2.3500000f, -1.0277777f, 3.9266666f, 0.3f, 0.2f, 0.9f);
+    drawCylinder(1.12f, -2.03f, 4.87f, 2.3500000f, -1.0277777f, 3.9266666f, 0.3f, 0.2f, 0.9f);
+
+    desenhar_esfera(-6.21f, -1.59f, -3.9f, 0.3f, 0.9f, 0.9f);
+    desenhar_esfera(-5.25f, -2.9f, -2.25f, 0.3f, 0.9f, 0.9f);
+    desenhar_esfera(-7.19f, -3.65f, -2.78f, 0.3f, 0.9f, 0.9f);
+    desenhar_esfera(-5.92f, -3.66f, -3.78f, 0.3f, 0.9f, 0.9f);
+
+    drawCylinder(-6.21f, -1.59f, -3.9f, -5.981578f, 1.6957894f, -2.3094736f, 0.3f, 0.9f, 0.9f);
+    drawCylinder(-5.25f, -2.9f, -2.25f, -5.981578f, 1.6957894f, -2.3094736f, 0.3f, 0.9f, 0.9f);
+    drawCylinder(-7.19f, -3.65f, -2.78f, -5.981578f, 1.6957894f, -2.3094736f, 0.3f, 0.9f, 0.9f);
+    drawCylinder(-5.92f, -3.66f, -3.78f, -5.981578f, 1.6957894f, -2.3094736f, 0.3f, 0.9f, 0.9f);
 
     glEnd();
 
