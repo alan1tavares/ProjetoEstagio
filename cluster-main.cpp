@@ -153,6 +153,7 @@ void desenha(void)
 
     //Desesnha esferas e cilindros
     for (i=0; i < t; i++){
+        desenhar_esfera(matrizPrincipal[i][3],matrizPrincipal[i][4],matrizPrincipal[i][5],matrizPrincipal[i][6],matrizPrincipal[i][7],matrizPrincipal[i][8]);
         desenhar_esfera(matrizPrincipal[i][0], matrizPrincipal[i][1], matrizPrincipal[i][2], matrizPrincipal[i][6], matrizPrincipal[i][7], matrizPrincipal[i][8]);
         drawCylinder(matrizPrincipal[i][0],matrizPrincipal[i][1],matrizPrincipal[i][2],matrizPrincipal[i][3],matrizPrincipal[i][4],matrizPrincipal[i][5],matrizPrincipal[i][6],matrizPrincipal[i][7],matrizPrincipal[i][8]);
     }
@@ -268,7 +269,7 @@ void visualizacao_perspectiva(void)
     glLoadIdentity();
 
     // Especifica a projecao de perspectiva
-    gluPerspective(fAngulo, fAspecto, 0.5, 500);
+    gluPerspective(fAngulo, fAspecto, 0.5, 5000);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
