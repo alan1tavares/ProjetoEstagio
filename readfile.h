@@ -11,12 +11,13 @@ using namespace std;
 class Cluster{
 private:
     float** matriz;
-    int tam;
+    int numlinhas;
 public:
-    Cluster();
-    int getTamanho();
-    void imprimeMatriz();
-    float getMatriz(int, int);
+    Cluster();                      //Construtor
+    int getTamanho();               //Função que retorna o numero de pontos
+    void imprimeMatriz();           //Função para exibir a matriz
+    float getMatriz(int, int);      //Função que retorna a matriz
+    ~Cluster();                     //Destrutor
 };
 
 Cluster::Cluster(){
@@ -25,7 +26,7 @@ Cluster::Cluster(){
     int cont, i, j;
     cont = 0;
 
-    arquivo.open("Teste.s3d", ifstream::in);
+    arquivo.open("Teste1.s3d", ifstream::in);
 
     if (!arquivo.is_open()) {
         cout << "bye!";
@@ -42,25 +43,25 @@ Cluster::Cluster(){
     getline(arquivo, str,' ');
     cout << str << ' ';
     getline(arquivo, str);
-    tam = atoi(str.c_str());
-    cout << tam << endl;
+    numlinhas = atoi(str.c_str());
+    cout << numlinhas << endl;
 
-    matriz = new float*[tam];
-    for(i=0; i < tam; i++)
-        matriz[i] = new float[tam];
+    matriz = new float*[numlinhas];
+    for(i=0; i < numlinhas; i++)
+        matriz[i] = new float[numlinhas];
 
-    for (i=0; i < tam; i++){
+    for (i=0; i < numlinhas; i++){
         for (j=0; j < 9; j++)
             arquivo >> matriz[i][j];
     }
 }
 
 int Cluster::getTamanho(){
-    return tam;
+    return numlinhas;
 }
 
 void Cluster::imprimeMatriz(){
-    for (int i=0; i < tam; i++){
+    for (int i=0; i < numlinhas; i++){
         for (int j=0; j < 9; j++)
             cout << matriz[i][j] << "   ";
         cout << endl;
@@ -69,5 +70,12 @@ void Cluster::imprimeMatriz(){
 
 float Cluster::getMatriz(int i, int j){
     return matriz[i][j];
+}
+
+Cluster::~Cluster(){
+    int i;
+    for (i = 0; i < numlinhas; i++)
+        delete [] matriz[i];
+    delete [] matriz;
 }
 #endif

@@ -36,6 +36,9 @@ using namespace std;
 GLfloat fAspecto, fAngulo;
 GLfloat fRotacaoX, fRotacaoY, fRotacaoZ;
 GLfloat fTranslacaoX, fTranslacaoY, fTranslacaoZ;
+Cluster cluster;                            //Construtor do arquivo
+int t = cluster.getTamanho();               //Pega o numero de pontos
+float** matrizPontos;                       //Matriz dos pontos
 // Fim das variaveis globais
 
 
@@ -72,11 +75,23 @@ int main(int argc, char *argv[])
 {
     //Inicialização de alguns parâmetros
     //-----------------------------//
+    int i, j;
+
+    matrizPontos = new float*[t];       //Aloca matriz
+    for(i=0; i < t; i++)
+        matrizPontos[i] = new float[t];
+
+    for (i=0; i < t; i++){
+        for (j=0; j < 9; j++)
+            matrizPontos[i][j] = cluster.getMatriz(i,j);
+    }
+
+    cluster.imprimeMatriz();            //Exibe a matriz
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
     glutInitWindowPosition(5,5);
-    glutInitWindowSize(800,800); //-> tem q alterar isso aq
+    glutInitWindowSize(800,800);
     glutCreateWindow("SCluster 3D");
     //-----------------------------//
 
@@ -119,6 +134,8 @@ int main(int argc, char *argv[])
 
     glutMainLoop();
 
+    cluster.~Cluster();
+
     return 0;
 } // Fim do main
 
@@ -130,32 +147,22 @@ int main(int argc, char *argv[])
 //----------------------------------//
 void desenha(void)
 {
+    int i;
+
     // Limpa a janela de visualizacao
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Desenha os eixos xyz
     desenhar_eixos();
 
-    int i, j;
-    Cluster cluster;                        //Construtor do arquivo
-    int t = cluster.getTamanho();           //Pega o numero de pontos
-
-    float** matrizPrincipal = new float*[t];       //Aloca matriz
-    for(i=0; i < t; i++)
-        matrizPrincipal[i] = new float[t];
-
-    for (i=0; i < t; i++){
-        for (j=0; j < 9; j++)
-            matrizPrincipal[i][j] = cluster.getMatriz(i,j);
-    }
-
-    cluster.imprimeMatriz();                //Exibe a matriz
-
     //Desesnha esferas e cilindros
     for (i=0; i < t; i++){
-        desenhar_esfera(matrizPrincipal[i][3],matrizPrincipal[i][4],matrizPrincipal[i][5],matrizPrincipal[i][6],matrizPrincipal[i][7],matrizPrincipal[i][8]);
-        desenhar_esfera(matrizPrincipal[i][0], matrizPrincipal[i][1], matrizPrincipal[i][2], matrizPrincipal[i][6], matrizPrincipal[i][7], matrizPrincipal[i][8]);
-        drawCylinder(matrizPrincipal[i][0],matrizPrincipal[i][1],matrizPrincipal[i][2],matrizPrincipal[i][3],matrizPrincipal[i][4],matrizPrincipal[i][5],matrizPrincipal[i][6],matrizPrincipal[i][7],matrizPrincipal[i][8]);
+        //desenha esfera central ou vertice, no caso de um grafo
+        desenhar_esfera(matrizPontos[i][3],matrizPontos[i][4],matrizPontos[i][5],matrizPontos[i][6],matrizPontos[i][7], matrizPontos[i][8]);
+        //desenha os vertices
+        desenhar_esfera(matrizPontos[i][0], matrizPontos[i][1], matrizPontos[i][2], matrizPontos[i][6], matrizPontos[i][7], matrizPontos[i][8]);
+        //desenha as arestas
+        drawCylinder(matrizPontos[i][0],matrizPontos[i][1],matrizPontos[i][2],matrizPontos[i][3],matrizPontos[i][4],matrizPontos[i][5],matrizPontos[i][6],matrizPontos[i][7],matrizPontos[i][8]);
     }
 
     glEnd();
@@ -197,11 +204,11 @@ void teclado(unsigned char tecla, int x, int y)
     // Sair da tela usando esc
     if(tecla == 27) exit(0);
     // Rotacao no eixo X
-    if(tecla == 'w') --fRotacaoX;
-    if(tecla == 's') ++fRotacaoX;
+    if((tecla == 'w') || (tecla == 'W')) --fRotacaoX;
+    if((tecla == 's') || (tecla == 'S'))++fRotacaoX;
     // Rotacao no eixo Y
-    if(tecla == 'a') --fRotacaoY;
-    if(tecla == 'd') ++fRotacaoY;
+    if((tecla == 'a') || (tecla == 'A')) --fRotacaoY;
+    if((tecla == 'd') || (tecla == 'D')) ++fRotacaoY;
 
     atualizar_camera();
 
