@@ -23,6 +23,8 @@ void GLPainel::paintGL(){
     if(ptrEixoZ != NULL)
         ptrEixoZ->pintar();
 
+    testeEsfera.pintar();
+
     glFlush();
 
 }

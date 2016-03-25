@@ -151,16 +151,31 @@ font-weight: nomal;</string>
        <property name="text">
         <string>y</string>
        </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item row="2" column="0">
       <widget class="QCheckBox" name="checkBoxEixoX">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="acceptDrops">
+        <bool>false</bool>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
        <property name="styleSheet">
         <string notr="true">border-width: 0px;
 font-weight: nomal;</string>
        </property>
        <property name="text">
         <string>x</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -172,6 +187,9 @@ font-weight: nomal;</string>
        </property>
        <property name="text">
         <string>z</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
        </property>
       </widget>
      </item>

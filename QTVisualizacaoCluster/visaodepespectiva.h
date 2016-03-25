@@ -21,10 +21,10 @@ private:
 public:
     VisaoDePespectiva();
     void setCamera(float, float, float, float, float, float, float, float, float);
-    void fazer_translacao(float, float, float);
-    void fazer_rotacao(float, float, float);
-    void pintar();
+    void fazerTranslacao(float, float, float);
+    void fazerRotacao(float, float, float);
     void setPespectiva(float, float, float, float);
+    void pintar();
 };
 
 #endif // VISAODEPESPECTIVA_H
