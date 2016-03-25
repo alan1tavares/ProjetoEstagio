@@ -14,7 +14,7 @@ void GLPainel::initializeGL(){
 }
 
 void GLPainel::paintGL(){
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     if(ptrEixoX != NULL)
         ptrEixoX->pintar();
@@ -24,9 +24,19 @@ void GLPainel::paintGL(){
         ptrEixoZ->pintar();
 
     glFlush();
+
 }
 
 void GLPainel::resizeGL(int w, int h){
+    float aspecto;
+    aspecto = (GLfloat)w/(GLfloat)h;
+
+    glViewport(0, 0, w, h);
+
+    pespectiva.setPespectiva(60.0f, aspecto, 0.5f, 500.0f);
+    pespectiva.setCamera(0,0,10 , 0,0,0 , 0,1,0);
+
+    pespectiva.pintar();
 
 }
 

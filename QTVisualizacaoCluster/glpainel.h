@@ -2,8 +2,9 @@
 #define GLPAINEL_H
 
 #include <QGLWidget>
+#include <GL/glut.h>
 #include "eixos.h"
-#include <GL/freeglut.h>
+#include "visaodepespectiva.h"
 
 class GLPainel : public QGLWidget
 {
@@ -12,6 +13,9 @@ private:
     Eixos *ptrEixoX;
     Eixos *ptrEixoY;
     Eixos *ptrEixoZ;
+
+    VisaoDePespectiva pespectiva;
+
 public:
     explicit GLPainel(QWidget *parent = 0);
 
