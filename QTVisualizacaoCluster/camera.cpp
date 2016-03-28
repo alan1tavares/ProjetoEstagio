@@ -1,18 +1,18 @@
-#include "visaodepespectiva.h"
+#include "camera.h"
 
-VisaoDePespectiva::VisaoDePespectiva(){
+Camera::Camera(){
 
 }
 
 
-void VisaoDePespectiva::setPespectiva(float angulo, float aspecto, float frente, float fundo){
+void Camera::setPespectiva(float angulo, float aspecto, float frente, float fundo){
     this->angulo = angulo;
     this->aspecto = aspecto;
     this->plano_frente = frente;
     this->plano_fundo = fundo;
 }
 
-void VisaoDePespectiva::setCamera(float posicao_cameraX, float posicao_cameraY, float posicao_cameraZ,
+void Camera::setCamera(float posicao_cameraX, float posicao_cameraY, float posicao_cameraZ,
                              float posicao_objetoX, float posicao_objetoY, float posicao_objetoZ,
                              float orientacao_cameraX, float orientacao_cameraY, float orientacao_cameraZ){
 
@@ -29,19 +29,19 @@ void VisaoDePespectiva::setCamera(float posicao_cameraX, float posicao_cameraY, 
     orientacao_camera[2] = orientacao_cameraZ;
 }
 
-void VisaoDePespectiva::fazerTranslacao(float x, float y, float z){
+void Camera::fazerTranslacao(float x, float y, float z){
     translacao[0] = x;
     translacao[1] = y;
     translacao[2] = z;
 }
 
-void VisaoDePespectiva::fazerRotacao(float anguloX, float anguloY, float anguloZ){
+void Camera::fazerRotacao(float anguloX, float anguloY, float anguloZ){
     rotacao_angulo[0] = anguloX;
     rotacao_angulo[1] = anguloY;
     rotacao_angulo[2] = anguloZ;
 }
 
-void VisaoDePespectiva::pintar(){
+void Camera::rodarCamera(){
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 

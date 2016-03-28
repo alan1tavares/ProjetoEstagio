@@ -3,7 +3,7 @@
 
 #include<GL/freeglut.h>
 
-class VisaoDePespectiva
+class Camera
 {
 private:
     float angulo;
@@ -19,12 +19,12 @@ private:
     float rotacao_angulo[3];
 
 public:
-    VisaoDePespectiva();
+    Camera();
     void setCamera(float, float, float, float, float, float, float, float, float);
     void fazerTranslacao(float, float, float);
     void fazerRotacao(float, float, float);
     void setPespectiva(float, float, float, float);
-    void pintar();
+    void rodarCamera();
 };
 
 #endif // VISAODEPESPECTIVA_H

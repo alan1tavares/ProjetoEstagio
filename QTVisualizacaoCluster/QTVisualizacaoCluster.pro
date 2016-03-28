@@ -17,22 +17,22 @@ SOURCES += main.cpp\
     glpainel.cpp \
     desenho.cpp \
     malha.cpp \
-    visaodepespectiva.cpp \
     esfera.cpp \
     eixos.cpp \
     cilindro.cpp \
     arquivo.cpp \
-    forma.cpp
+    forma.cpp \
+    camera.cpp
 
 HEADERS  += mainwindow.h \
     glpainel.h \
     desenho.h \
     malha.h \
-    visaodepespectiva.h \
     esfera.h \
     eixos.h \
     cilindro.h \
     arquivo.h \
-    forma.h
+    forma.h \
+    camera.h
 
 FORMS    += mainwindow.ui
