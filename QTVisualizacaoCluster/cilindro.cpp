@@ -22,13 +22,13 @@ void Cilindro::setCor(float r, float g, float b){
     cor[2] = b;
 }
 
-void Cilindro::setCoordenadas(float x1, float y1, float z1, float x2, float y2, float z2){
-    coord_inicio[0] = x1;
-    coord_inicio[1] = y1;
-    coord_inicio[2] = z1;
-    coord_final[0] = x2;
-    coord_final[1] = y2;
-    coord_final[2] = z2;
+void Cilindro::setCoordenadas(float x0, float y0, float z0, float x1, float y1, float z1){
+    coord_inicio[0] = x0;
+    coord_inicio[1] = y0;
+    coord_inicio[2] = z0;
+    coord_final[0] = x1;
+    coord_final[1] = y1;
+    coord_final[2] = z1;
 }
 
 void Cilindro::pintar(){

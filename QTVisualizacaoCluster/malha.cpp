@@ -31,14 +31,17 @@ void Malha::setCor(float r, float g, float b){
 
 void Malha::pintarXZ(){
     glDisable(GL_LIGHTING);
+    glLineWidth(1.0f);
     glBegin(GL_LINES);
     for (int i = ponto_inicial[0]; i <= ponto_final[2]; i+=1){
-        glColor3f(cor[0], cor[1], cor[2]);
+        if(i != 0){
+            glColor3f(cor[0], cor[1], cor[2]);
 
-        glVertex3f((float)i, 0.0f, ponto_inicial[2]);
-        glVertex3f((float)i, 0.0f, ponto_final[2]);
-        glVertex3f(ponto_inicial[0], 0.0f,(float)i);
-        glVertex3f(ponto_final[0], 0.0f,(float)i);
+            glVertex3f((float)i, 0.0f, ponto_inicial[2]);
+            glVertex3f((float)i, 0.0f, ponto_final[2]);
+            glVertex3f(ponto_inicial[0], 0.0f,(float)i);
+            glVertex3f(ponto_final[0], 0.0f,(float)i);
+        }
     }
     glEnd();
     glEnable(GL_LIGHTING);
@@ -46,14 +49,17 @@ void Malha::pintarXZ(){
 
 void Malha::pintarXY(){
     glDisable(GL_LIGHTING);
+    glLineWidth(1.0f);
     glBegin(GL_LINES);
     for (int i = ponto_inicial[0]; i <= ponto_final[1]; i+=1){
-        glColor3f(cor[0], cor[1], cor[2]);
+        if(i != 0){
+            glColor3f(cor[0], cor[1], cor[2]);
 
-        glVertex3f((float)i, ponto_inicial[1], 0.0f);
-        glVertex3f((float)i, ponto_final[1], 0.0f);
-        glVertex3f(ponto_inicial[0], (float)i, 0.0f);
-        glVertex3f(ponto_final[0], (float)i, 0.0f);
+            glVertex3f((float)i, ponto_inicial[1], 0.0f);
+            glVertex3f((float)i, ponto_final[1], 0.0f);
+            glVertex3f(ponto_inicial[0], (float)i, 0.0f);
+            glVertex3f(ponto_final[0], (float)i, 0.0f);
+        }
     }
     glEnd();
     glEnable(GL_LIGHTING);
@@ -61,14 +67,17 @@ void Malha::pintarXY(){
 
 void Malha::pintarYZ(){
     glDisable(GL_LIGHTING);
+    glLineWidth(1.0f);
     glBegin(GL_LINES);
     for (int i = ponto_inicial[1]; i <= ponto_final[2]; i+=1){
-        glColor3f(cor[0], cor[1], cor[2]);
+        if(i != 0){
+            glColor3f(cor[0], cor[1], cor[2]);
 
-        glVertex3f(0.0f, ponto_inicial[1], (float)i);
-        glVertex3f(0.0f, ponto_final[1], (float)i);
-        glVertex3f(0.0f, (float)i, ponto_inicial[2]);
-        glVertex3f(0.0f, (float)i, ponto_final[2]);
+            glVertex3f(0.0f, ponto_inicial[1], (float)i);
+            glVertex3f(0.0f, ponto_final[1], (float)i);
+            glVertex3f(0.0f, (float)i, ponto_inicial[2]);
+            glVertex3f(0.0f, (float)i, ponto_final[2]);
+        }
     }
     glEnd();
     glEnable(GL_LIGHTING);
