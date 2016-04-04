@@ -30,6 +30,7 @@ void Malha::setCor(float r, float g, float b){
 }
 
 void Malha::pintarXZ(){
+    glDisable(GL_LIGHTING);
     glBegin(GL_LINES);
     for (int i = ponto_inicial[0]; i <= ponto_final[2]; i+=1){
         glColor3f(cor[0], cor[1], cor[2]);
@@ -40,9 +41,11 @@ void Malha::pintarXZ(){
         glVertex3f(ponto_final[0], 0.0f,(float)i);
     }
     glEnd();
+    glEnable(GL_LIGHTING);
 }
 
 void Malha::pintarXY(){
+    glDisable(GL_LIGHTING);
     glBegin(GL_LINES);
     for (int i = ponto_inicial[0]; i <= ponto_final[1]; i+=1){
         glColor3f(cor[0], cor[1], cor[2]);
@@ -53,9 +56,11 @@ void Malha::pintarXY(){
         glVertex3f(ponto_final[0], (float)i, 0.0f);
     }
     glEnd();
+    glEnable(GL_LIGHTING);
 }
 
 void Malha::pintarYZ(){
+    glDisable(GL_LIGHTING);
     glBegin(GL_LINES);
     for (int i = ponto_inicial[1]; i <= ponto_final[2]; i+=1){
         glColor3f(cor[0], cor[1], cor[2]);
@@ -66,4 +71,5 @@ void Malha::pintarYZ(){
         glVertex3f(0.0f, (float)i, ponto_final[2]);
     }
     glEnd();
+    glEnable(GL_LIGHTING);
 }

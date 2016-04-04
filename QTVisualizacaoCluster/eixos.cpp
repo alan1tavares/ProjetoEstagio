@@ -30,9 +30,11 @@ void Eixos::setCor(float r, float g, float b){
 }
 
 void Eixos::pintar(){
+    glDisable(GL_LIGHTING);
     glBegin(GL_LINES);
         glColor3f(cor[0], cor[1], cor[2]);
         glVertex3f(ponto_inicial[0], ponto_inicial[1], ponto_inicial[2]);
         glVertex3f(ponto_final[0], ponto_final[1], ponto_final[2]);
     glEnd();
+    glEnable(GL_LIGHTING);
 }

@@ -3,8 +3,8 @@
 Esfera::Esfera()
 {
     raio = 2.0f;
-    slices = 15;
-    stacks = 30;
+    slices = 20;
+    stacks = 100;
 
     cor[0] = cor[1] = cor[2] = 0.0f;
 }
@@ -39,6 +39,6 @@ void Esfera::pintar(){
     glColor3f(cor[0], cor[1], cor[2]);
     GLUquadricObj *quad = gluNewQuadric();
     gluSphere(quad, raio, slices, stacks);
-    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+    //glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
     glPopMatrix();
 }
