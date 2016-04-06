@@ -27,6 +27,45 @@
      <string notr="true"/>
     </property>
    </widget>
+   <widget class="QLabel" name="labelX">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>260</y>
+      <width>55</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;x&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelY">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>290</y>
+      <width>55</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#000000;&quot;&gt;y&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelZ">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>320</y>
+      <width>91</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#000000;&quot;&gt;z&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
    <widget class="QGroupBox" name="groupBoxMalha">
     <property name="geometry">
      <rect>
@@ -195,101 +234,14 @@ font-weight: nomal;</string>
      </item>
     </layout>
    </widget>
-   <widget class="QGroupBox" name="groupBoxRotacao">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>360</y>
-      <width>161</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>11</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="toolTip">
-     <string/>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-width: 1px;
-border-style: solid;</string>
-    </property>
-    <property name="title">
-     <string>Rotação</string>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_3"/>
-   </widget>
-   <widget class="QGroupBox" name="groupBoxTranslacao">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>360</y>
-      <width>141</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>11</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="toolTip">
-     <string/>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-width: 1px;
-border-style: solid;</string>
-    </property>
-    <property name="title">
-     <string>Translação</string>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_4"/>
-   </widget>
-   <widget class="QLabel" name="labelX">
-    <property name="geometry">
-     <rect>
-      <x>630</x>
-      <y>260</y>
-      <width>55</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;x&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelY">
-    <property name="geometry">
-     <rect>
-      <x>630</x>
-      <y>290</y>
-      <width>55</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#000000;&quot;&gt;y&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelZ">
-    <property name="geometry">
-     <rect>
-      <x>630</x>
-      <y>320</y>
-      <width>55</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#000000;&quot;&gt;z&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
+   <zorder>widget</zorder>
+   <zorder>groupBoxMalha</zorder>
+   <zorder>groupBoxEixos</zorder>
+   <zorder>labelX</zorder>
+   <zorder>labelY</zorder>
+   <zorder>labelZ</zorder>
+   <zorder>groupBoxMalha</zorder>
+   <zorder>groupBoxEixos</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -304,7 +256,7 @@ border-style: solid;</string>
     <property name="title">
      <string>Arquivo</string>
     </property>
-    <addaction name="actionCarregar_arquivo"/>
+    <addaction name="actionAbrirArquivo"/>
     <addaction name="actionSair"/>
    </widget>
    <widget class="QMenu" name="menuSobre">
@@ -324,9 +276,9 @@ border-style: solid;</string>
    <addaction name="menuSobre_2"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionCarregar_arquivo">
+  <action name="actionAbrirArquivo">
    <property name="text">
-    <string>Carregar arquivo</string>
+    <string>Abrir arquivo</string>
    </property>
   </action>
   <action name="actionSair">

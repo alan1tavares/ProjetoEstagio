@@ -60,3 +60,6 @@ void Camera::rodarCamera(){
     glRotatef(rotacao_angulo[1], 0,1,0);
     glRotatef(rotacao_angulo[2], 0,0,1);
 }
+
+
+// Fazer um destrutor

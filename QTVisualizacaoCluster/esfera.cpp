@@ -2,7 +2,7 @@
 
 Esfera::Esfera()
 {
-    raio = 2.0f;
+    raio = 4.0f;
     slices = 20;
     stacks = 100;
 
@@ -39,6 +39,9 @@ void Esfera::pintar(){
     glColor3f(cor[0], cor[1], cor[2]);
     GLUquadricObj *quad = gluNewQuadric();
     gluSphere(quad, raio, slices, stacks);
-    //glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+    //glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);pra dazer o wire
     glPopMatrix();
 }
+
+
+// Fazer o destrutor

@@ -66,3 +66,6 @@ void Cilindro::pintar(){
         gluDisk(quadric, 0.0, raio, slices, 1);
     glPopMatrix();
 }
+
+
+// Fazer o destrutor

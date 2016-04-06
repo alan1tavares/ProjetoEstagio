@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include <QFileDialog>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -61,4 +61,15 @@ void MainWindow::on_checkBoxMalhaYZ_clicked()
     ui->widget->desenharMalha(ui->checkBoxMalhaXY->checkState(),
                               ui->checkBoxMalhaXZ->checkState(),
                               ui->checkBoxMalhaYZ->checkState());
+}
+
+void MainWindow::on_actionAbrirArquivo_triggered()
+{
+    QString arquivoNome = QFileDialog::getOpenFileName(
+                this,
+                tr("Abrir arquivo"),
+                "C://",
+                "All files (*.*)"
+                );
+    ui->widget->carregarArquivo(arquivoNome);
 }

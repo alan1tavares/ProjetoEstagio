@@ -41,8 +41,8 @@ void GLPainel::paintGL(){
     glMaterialfv(GL_FRONT, GL_SPECULAR,  mat_specular);
     glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
 
-    desenharCilindro();
-    desenharEsfera();
+    if(arquivo != NULL)
+        desenharOQueEstaNoArquivo();
 
     if(ptrEixoX != NULL)
         ptrEixoX->pintar();
@@ -76,25 +76,10 @@ void GLPainel::atualizarCamera(){
 void GLPainel::visaoPespectiva(){
     float aspecto = (GLfloat)width()/(GLfloat)height();
 
-    pespectiva.setPespectiva(60.0f, aspecto, 0.5f, 500.0f);
+    pespectiva.setPespectiva(60.0f, aspecto, 0.5f, 5000.0f);
     pespectiva.setCamera(0,0,10 , 0,0,0 , 0,1,0);
     pespectiva.rodarCamera();
 
-}
-
-void GLPainel::desenharCilindro(){
-    testeCilindro = new Cilindro;
-
-    testeCilindro->setCor(0.5f, 0.2f, 1.0f);
-    testeCilindro->setCoordenadas(0.0f,0.0f,0.0f , 4.0f,4.0f,4.0f);
-    testeCilindro->pintar();
-}
-
-void GLPainel::desenharEsfera(){
-    testeEsfera = new Esfera;
-    testeEsfera->setCor(0.5f, 0.2f, 1.0f);
-    testeEsfera->setCoordenadas(0.0f,0.0f,0.0f);
-    testeEsfera->pintar();
 }
 
 void GLPainel::desenharEixos(bool x, bool y, bool z){
@@ -209,13 +194,57 @@ void GLPainel::wheelEvent(QWheelEvent *event){
     int delta = event->delta();
     if(event->orientation() == Qt::Vertical){
         if(delta < 0){
-            translacaoZ = translacaoZ - 0.5f;
+            translacaoZ = translacaoZ - 2.6f;
             pespectiva.fazerTranslacao(translacaoX,translacaoY,translacaoZ);
         } else if(delta > 0){
-            translacaoZ = translacaoZ + 0.5f;
+            translacaoZ = translacaoZ + 2.6f;
             pespectiva.fazerTranslacao(translacaoX,translacaoY,translacaoZ);
         }
         this->z->setText(QString("z -> %1").arg(translacaoZ));
         atualizarCamera();
     }
 }
+
+
+void GLPainel::carregarArquivo(QString caminho){
+    caminhoArquivo = caminho;
+
+    // Carrega o arquivo
+    arquivo = new Arquivo(caminho.toStdString());
+
+    // Coloca a matriz do arquiv em outra matriz
+    // Nota: Acho que da pra alterar a classe arquivo e mudar isso
+    // aq retornando a matriz que esta no objeto arquivo
+    int t = arquivo->getTamanho();
+    int i, j;
+
+    matrizPontos = new float*[t];       //Aloca matriz
+    for(i=0; i < t; i++)
+        matrizPontos[i] = new float[t];
+
+    for (i=0; i < t; i++){
+        for (j=0; j < 9; j++)
+            matrizPontos[i][j] = arquivo->getMatriz(i,j);
+    }
+}
+
+
+void GLPainel::desenharOQueEstaNoArquivo(){
+    esferas = new Esfera;
+    cilindros = new Cilindro;
+
+    for (int i = 0; i < arquivo->getTamanho(); i++){
+        esferas->setCoordenadas(matrizPontos[i][3], matrizPontos[i][4], matrizPontos[i][5]);
+        esferas->setCor(matrizPontos[i][6], matrizPontos[i][7], matrizPontos[i][8]);
+        esferas->pintar();
+        esferas->setCoordenadas(matrizPontos[i][0], matrizPontos[i][1], matrizPontos[i][2]);
+        esferas->setCor(matrizPontos[i][6], matrizPontos[i][7], matrizPontos[i][8]);
+        esferas->pintar();
+        cilindros->setCoordenadas(matrizPontos[i][0],matrizPontos[i][1],matrizPontos[i][2],matrizPontos[i][3],matrizPontos[i][4],matrizPontos[i][5]);
+        cilindros->setCor(matrizPontos[i][6],matrizPontos[i][7],matrizPontos[i][8]);
+        cilindros->pintar();
+    }
+}
+
+
+// Fazer o destrutor

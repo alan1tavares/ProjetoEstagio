@@ -30,6 +30,8 @@ private slots:
 
     void on_checkBoxMalhaYZ_clicked();
 
+    void on_actionAbrirArquivo_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

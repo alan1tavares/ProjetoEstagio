@@ -39,3 +39,6 @@ void Eixos::pintar(){
     glEnd();
     glEnable(GL_LIGHTING);
 }
+
+
+// Fazer o destrutor

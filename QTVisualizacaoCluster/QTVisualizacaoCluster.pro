@@ -15,7 +15,6 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     glpainel.cpp \
-    desenho.cpp \
     malha.cpp \
     esfera.cpp \
     eixos.cpp \
@@ -25,7 +24,6 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     glpainel.h \
-    desenho.h \
     malha.h \
     esfera.h \
     eixos.h \

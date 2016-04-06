@@ -4,11 +4,13 @@
 #include <QGLWidget>
 #include <QMouseEvent>
 #include <GL/freeglut.h>
+#include <QString>
 #include "eixos.h"
 #include "camera.h"
 #include "esfera.h"
 #include "malha.h"
 #include "cilindro.h"
+#include "arquivo.h"
 
 #include <QtWidgets/QLabel>
 #include <stdio.h>
@@ -27,9 +29,13 @@ private:
 
     Camera pespectiva;
 
-    Esfera *testeEsfera;
+    Esfera *esferas;
+    Cilindro *cilindros;
 
-    Cilindro *testeCilindro;
+    //Arquivo
+    QString caminhoArquivo;
+    Arquivo *arquivo;
+    float** matrizPontos;
 
     //Variáveis para o mouse;
     float rotacaoX  = 0;
@@ -73,6 +79,10 @@ public:
     void mouseMoveEvent(QMouseEvent *);
 
     void wheelEvent(QWheelEvent *);
+
+    void carregarArquivo(QString);
+
+    void desenharOQueEstaNoArquivo();
 
     QLabel *x;
     QLabel *y;
